@@ -1,0 +1,84 @@
+/*{
+    "type": "action",
+    "targets": ["omnifocus"],
+    "author": "Donie",
+    "identifier": "org.0x3f.generate_work_journal",
+    "version": "1.0",
+    "description": "Assemble work logs of today and put them in clipboard.",
+    "label": "Generate Work Journal",
+    "shortLabel": "Generate Work Journal",
+    "paletteLabel": "Generate Work Journal",
+    "image": "list.bullet.circle"
+}*/
+(() => {
+    function get_work_logs() {
+        const journal_folder_name = "Work";
+        const journal_date = new Date();
+
+        var logs = new Array();
+
+        folderNamed(journal_folder_name).flattenedProjects.forEach((proj) => {
+            let completed_tasks = proj.flattenedTasks.filter(
+                (task) =>
+                    task.completed === true &&
+                    task.completionDate.toDateString() ===
+                        journal_date.toDateString()
+            );
+            logs = logs.concat(completed_tasks);
+        });
+
+        return logs;
+    }
+
+    var action = new PlugIn.Action(function (selection, sender) {
+        try {
+            let logs = get_work_logs();
+
+            if (logs.length === 0) {
+                throw { name: "Emmm...", message: "日志为空。" };
+            }
+
+            logs.sort((a, b) => {
+                if (a.completionDate > b.completionDate) {
+                    return 1;
+                } else if (a.completionDate < b.completionDate) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            let log_strings = logs.map((log) => {
+                let log_string_parts = new Array();
+
+                if (log.containingProject.name !== "Work") {
+                    log_string_parts.push(log.containingProject.name);
+                }
+
+                log_string_parts.push(log.name);
+
+                if (log.name.indexOf("面试") < 0) {
+                    log_string_parts.push(
+                        log.note.length > 0 ? log.note : "完成"
+                    );
+                }
+
+                return log_string_parts.join(" ");
+            });
+
+            Pasteboard.general.string = log_strings.join("\n");
+
+            new Alert("Wow!", "已生成工作日志并复制到剪贴板。").show();
+        } catch (err) {
+            new Alert(err.name, err.message).show();
+        }
+    });
+
+    action.validate = function (selection, sender) {
+        let logs = get_work_logs();
+
+        return logs.length > 0;
+    };
+
+    return action;
+})();
