@@ -3,7 +3,7 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.generate_work_journal",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Assemble work logs of today and put them in clipboard.",
     "label": "Generate Work Journal",
     "shortLabel": "Generate Work Journal",
@@ -48,25 +48,46 @@
                 }
             });
 
-            let log_strings = logs.map((log) => {
-                let log_string_parts = new Array();
+            let logsByProject = {};
 
-                if (log.containingProject.name !== "Work") {
-                    log_string_parts.push(log.containingProject.name);
+            logs.forEach((log) => {
+                const projectName = log.containingProject.name;
+                if (typeof logsByProject[projectName] === "undefined") {
+                    logsByProject[projectName] = [log];
+                } else {
+                    logsByProject[projectName].push(log);
                 }
-
-                log_string_parts.push(log.name);
-
-                if (log.name.indexOf("面试") < 0) {
-                    log_string_parts.push(
-                        log.note.length > 0 ? log.note : "完成"
-                    );
-                }
-
-                return log_string_parts.join(" ");
             });
 
-            Pasteboard.general.string = log_strings.join("\n");
+            let logStrings = [];
+
+            for (const [projectName, logs] of Object.entries(logsByProject)) {
+                const logSubStrings = logs.map((log) => {
+                    let logSubStringParts = [];
+
+                    logSubStringParts.push(log.name);
+
+                    if (log.name.indexOf("面试") < 0) {
+                        logSubStringParts.push(
+                            log.note.length > 0
+                                ? log.note.replaceAll("\n", " ")
+                                : "完成"
+                        );
+                    }
+
+                    return logSubStringParts.join(" ");
+                });
+
+                if (projectName === "Work") {
+                    logStrings = logStrings.concat(logSubStrings);
+                } else {
+                    logStrings.push(
+                        projectName + " " + logSubStrings.join(" ")
+                    );
+                }
+            }
+
+            Pasteboard.general.string = logStrings.join("\n");
 
             new Alert("Wow!", "已生成工作日志并复制到剪贴板。").show();
         } catch (err) {
