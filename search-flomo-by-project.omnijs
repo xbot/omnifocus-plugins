@@ -1,0 +1,177 @@
+/*{
+    "type": "action",
+    "targets": ["omnifocus"],
+    "author": "Donie",
+    "identifier": "org.0x3f.search_flomo_by_project",
+    "version": "1.0",
+    "description": "Search in Flomo according to the selected project.",
+    "label": "Search in Flomo",
+    "shortLabel": "Search in Flomo",
+    "paletteLabel": "Search in Flomo",
+    "image": "list.bullet.circle"
+}*/
+(() => {
+    let preferences = new Preferences();
+
+    const PREF_PATTERN = "pattern";
+    const PREF_KEYWORD_TMPL = "keyword_template";
+    const PREF_TAG = "tag";
+
+    if (!String.prototype.format) {
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != "undefined"
+                    ? args[number]
+                    : match;
+            });
+        };
+    }
+
+    function get_matches(selection) {
+        if (selection.databaseObjects.length <= 0) {
+            return null;
+        }
+
+        const firstSelectedObj = selection.databaseObjects[0];
+
+        let projectName = null;
+
+        if (typeof firstSelectedObj.containingProject === "undefined") {
+            projectName = firstSelectedObj.name;
+        } else {
+            projectName = firstSelectedObj.containingProject.name;
+        }
+
+        const pattern = preferences.readString(PREF_PATTERN);
+
+        if (pattern === null || pattern.length === 0) {
+            console.log(action.plugIn.identifier + ": No pattern defined.");
+            return null;
+        }
+
+        const regex = new RegExp(pattern);
+        const matches = projectName.match(regex);
+
+        if (matches.length < 2) {
+            return null;
+        }
+
+        return matches.slice(1);
+    }
+
+    function prompt_preferences_dialog() {
+        let defaultPattern = "";
+        let defaultKeywordTmpl = "";
+        let defaultTag = "";
+
+        let pattern = preferences.readString(PREF_PATTERN);
+        if (!pattern) {
+            pattern = defaultPattern;
+        }
+
+        let keywordTmpl = preferences.readString(PREF_KEYWORD_TMPL);
+        if (!keywordTmpl) {
+            keywordTmpl = defaultKeywordTmpl;
+        }
+
+        let tag = preferences.readString(PREF_TAG);
+        if (!tag) {
+            tag = defaultTag;
+        }
+
+        let patternInput = new Form.Field.String(PREF_PATTERN, "Pattern", pattern);
+        let keywordTmplInput = new Form.Field.String(PREF_KEYWORD_TMPL, "Keyword template", keywordTmpl);
+        let tagInput = new Form.Field.String(PREF_TAG, "Tag", tag);
+
+        let preferenceForm = new Form();
+
+        preferenceForm.addField(patternInput);
+        preferenceForm.addField(keywordTmplInput);
+        preferenceForm.addField(tagInput);
+
+        let formPrompt = "Search in Flomo";
+        let buttonTitle = "Save";
+
+        let formPromise = preferenceForm.show(formPrompt, buttonTitle);
+
+        preferenceForm.validate = function (formObject) {
+            return true;
+        };
+
+        formPromise.then(function (formObject) {
+            pattern = formObject.values[PREF_PATTERN];
+            if (!pattern) {
+                pattern = "";
+            }
+
+            keywordTmpl = formObject.values[PREF_KEYWORD_TMPL];
+            if (!keywordTmpl) {
+                keywordTmpl = "";
+            }
+
+            tag = formObject.values[PREF_TAG];
+            if (!tag) {
+                tag = "";
+            }
+
+            preferences.write(PREF_PATTERN, pattern.trim());
+            preferences.write(PREF_KEYWORD_TMPL, keywordTmpl.trim());
+            preferences.write(PREF_TAG, tag.trim());
+        });
+    }
+
+    var action = new PlugIn.Action(function (selection, sender) {
+        try {
+            if (app.controlKeyDown) {
+                prompt_preferences_dialog();
+            } else {
+                const matches = get_matches(selection);
+
+                if (matches === null) {
+                    throw {
+                        name: "Emmm...",
+                        message: "Cannot find matches for your pattern.",
+                    };
+                }
+
+                const keywordTmpl = preferences.readString(PREF_KEYWORD_TMPL);
+
+                if (keywordTmpl === null || keywordTmpl.length === 0) {
+                    throw {
+                        name: "Emmm...",
+                        message: "Keyword template must be set in preferences. (Click the action with CTRL key)",
+                    };
+                }
+
+                let url = "https://flomoapp.com/mine?query=" + keywordTmpl.format(matches);
+
+                const tag = preferences.readString(PREF_TAG);
+
+                if (tag) {
+                    url += "&tag=" + tag;
+                }
+
+                URL.fromString(url).open();
+            }
+        } catch (err) {
+            new Alert(err.name, err.message).show();
+        }
+    });
+
+    action.validate = function (selection, sender) {
+        if (app.controlKeyDown) {
+            return true;
+        }
+
+        try {
+            const matches = get_matches(selection);
+
+            return matches !== null;
+        } catch (err) {
+            return false;
+        }
+    };
+
+    return action;
+})();
