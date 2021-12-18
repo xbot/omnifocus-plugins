@@ -3,12 +3,12 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.search_flomo_by_project",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Search in Flomo according to the selected project.",
     "label": "Search in Flomo",
     "shortLabel": "Search in Flomo",
     "paletteLabel": "Search in Flomo",
-    "image": "list.bullet.circle"
+    "image": "note.text"
 }*/
 (() => {
     let preferences = new Preferences();
@@ -121,9 +121,13 @@
         });
     }
 
+    function is_preference_action(sender) {
+        return (app.platformName === "macOS" && app.controlKeyDown) || (app.platformName === "iOS" && sender instanceof MenuItem);
+    }
+
     var action = new PlugIn.Action(function (selection, sender) {
         try {
-            if (app.controlKeyDown) {
+            if (is_preference_action(sender)) {
                 prompt_preferences_dialog();
             } else {
                 const matches = get_matches(selection);
@@ -160,7 +164,7 @@
     });
 
     action.validate = function (selection, sender) {
-        if (app.controlKeyDown) {
+        if (is_preference_action(sender)) {
             return true;
         }
 

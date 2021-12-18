@@ -3,12 +3,12 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.open_jira_ticket",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Open jira ticket of the focused project.",
     "label": "Open Jira Ticket",
     "shortLabel": "Open Jira Ticket",
     "paletteLabel": "Open Jira Ticket",
-    "image": "list.bullet.circle"
+    "image": "j.square.on.square"
 }*/
 (() => {
     let preferences = new Preferences();
@@ -81,9 +81,13 @@
         });
     }
 
+    function is_preference_action(sender) {
+        return (app.platformName === "macOS" && app.controlKeyDown) || (app.platformName === 'iOS' && sender instanceof MenuItem);
+    }
+
     var action = new PlugIn.Action(function (selection, sender) {
         try {
-            if (app.controlKeyDown) {
+            if (is_preference_action(sender)) {
                 prompt_preferences_dialog();
             } else {
                 const ticketNumber = get_current_jira_ticket_number(selection);
@@ -101,7 +105,7 @@
     });
 
     action.validate = function (selection, sender) {
-        return get_current_jira_ticket_number(selection) !== null;
+        return is_preference_action(sender) || get_current_jira_ticket_number(selection) !== null;
     };
 
     return action;

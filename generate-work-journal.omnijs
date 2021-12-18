@@ -8,7 +8,7 @@
     "label": "Generate Work Journal",
     "shortLabel": "Generate Work Journal",
     "paletteLabel": "Generate Work Journal",
-    "image": "list.bullet.circle"
+    "image": "list.number"
 }*/
 (() => {
     function get_work_logs() {
