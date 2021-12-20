@@ -24,20 +24,16 @@
 
         let projectName = null;
 
-        if (typeof firstSelectedObj.containingProject === "undefined") {
-            projectName = firstSelectedObj.name;
-        } else {
+        if (firstSelectedObj instanceof Task && firstSelectedObj.containingProject !== null) {
             projectName = firstSelectedObj.containingProject.name;
+        } else {
+            projectName = firstSelectedObj.name;
         }
 
         const regex = /^DEV-(\d+)\s/;
         const matches = projectName.match(regex);
 
-        if (matches.length < 2) {
-            new Alert(
-                "Emmm...",
-                "The focused project is not a jira ticket."
-            ).show();
+        if (matches === null || matches.length < 2) {
             return null;
         }
 
