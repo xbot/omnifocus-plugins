@@ -39,3 +39,9 @@ In iOS, tap the console icon in the home perspective, then tap the corresponding
 `Keyword template` is a string template, the matched results will be used to fill this template and then be used to search in flomo as a keyword.
 
 `Tag` is the name of a tag in Flomo, this option is optional, if set, it will be appended to the query URL to filter the results as an additional dimension.
+
+## Convert selected tasks to projects
+
+`convert-tasks-to-projects.omnijs`
+
+Convert selected tasks to projects and put them into the chosen folder or the end of the library.
