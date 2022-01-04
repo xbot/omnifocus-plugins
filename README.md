@@ -45,3 +45,9 @@ In iOS, tap the console icon in the home perspective, then tap the corresponding
 `convert-tasks-to-projects.omnijs`
 
 Convert selected tasks to projects and put them into the chosen folder or the end of the library.
+
+## Reset review status
+
+`reset-review-status.omnijs`
+
+Reset review status of projects under selected folders.
