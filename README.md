@@ -51,3 +51,9 @@ Convert selected tasks to projects and put them into the chosen folder or the en
 `reset-review-status.omnijs`
 
 Reset review status of projects under selected folders.
+
+## Rearrange timescales of selected projects or tasks
+
+`rearrange-object-timescales.omnijs`
+
+Currently, the timescales are fixed. The selected projects or tasks can be rearranged to Morning, Noon, Afternoon, Evening, Daytime or Whole Day.
