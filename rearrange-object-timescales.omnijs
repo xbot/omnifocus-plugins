@@ -3,7 +3,7 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.rearrange_object_timescales",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Rearrange timescales of the selected objects.",
     "label": "Rearrange Timescales",
     "shortLabel": "Rearrange Timescales",
@@ -11,7 +11,14 @@
     "image": "digitalcrown.arrow.counterclockwise"
 }*/
 (() => {
-    const FIELD_TIMESCALES = "Timescales";
+    const FORM_TITLE   = "Rearrange Timescales";
+    const BUTTON_LABEL = "Arrange";
+
+    const FIELD_DATE       = "date";
+    const FIELD_TIMESCALES = "timescales";
+
+    const LABEL_DATE      = "Date";
+    const LABEL_TIMESCALE = "Timescale";
 
     const PREF_LAST_SELECTED_TIMESCALE = "lastSelectedTimescale";
 
@@ -35,6 +42,15 @@
 
     var action = new PlugIn.Action(function (selection, sender) {
         try {
+            let form = new Form();
+
+            let defaultDate = new Date;
+            defaultDate.setHours(0, 0, 0, 0);
+
+            let dateInput = new Form.Field.Date(FIELD_DATE, LABEL_DATE, defaultDate);
+
+            form.addField(dateInput);
+
             let menuItems = [
                 "Morning",
                 "Noon",
@@ -59,26 +75,23 @@
 
             let timescaleMenu = new Form.Field.Option(
                 FIELD_TIMESCALES,
-                null,
+                LABEL_TIMESCALE,
                 Object.keys(TIMESCALES),
                 menuItems,
                 selectedKey
             );
 
-            let form = new Form();
             form.addField(timescaleMenu);
 
-            let formTitle   = "Rearrange Timescales";
-            let buttonLabel = "Arrange";
-
-            let formPromise = form.show(formTitle, buttonLabel);
+            let formPromise = form.show(FORM_TITLE, BUTTON_LABEL);
 
             form.validate = function (formObject) {
                 return true;
             };
 
             formPromise.then((formObject) => {
-                let selectedTimescale = formObject.values[FIELD_TIMESCALES];
+                let date      = formObject.values[FIELD_DATE];
+                let timescale = formObject.values[FIELD_TIMESCALES];
 
                 selection.allObjects.forEach((object) => {
                     if (!(object instanceof Task) && !(object instanceof Project)) {
@@ -86,10 +99,10 @@
                     }
 
                     let newDeferDate = new Date(
-                        new Date().toDateString() + " " + TIMESCALES[selectedTimescale].from
+                        date.toDateString() + " " + TIMESCALES[timescale].from
                     );
                     let newDueDate = new Date(
-                        new Date().toDateString() + " " + TIMESCALES[selectedTimescale].to
+                        date.toDateString() + " " + TIMESCALES[timescale].to
                     );
 
                     object.deferDate = newDeferDate;
@@ -98,7 +111,7 @@
 
                 preferences.write(
                     PREF_LAST_SELECTED_TIMESCALE,
-                    selectedTimescale
+                    timescale
                 );
             });
         } catch (err) {
