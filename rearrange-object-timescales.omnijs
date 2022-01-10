@@ -3,7 +3,7 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.rearrange_object_timescales",
-    "version": "1.1",
+    "version": "1.1.1",
     "description": "Rearrange timescales of the selected objects.",
     "label": "Rearrange Timescales",
     "shortLabel": "Rearrange Timescales",
@@ -94,7 +94,7 @@
                 let timescale = formObject.values[FIELD_TIMESCALES];
 
                 selection.allObjects.forEach((object) => {
-                    if (!(object instanceof Task) && !(object instanceof Project)) {
+                    if ((!(object instanceof Task) && !(object instanceof Project)) || object.completed === true) {
                         return;
                     }
 
@@ -120,7 +120,7 @@
     });
 
     action.validate = function (selection, sender) {
-        return selection.tasks.length + selection.projects.length > 0;
+        return selection.tasks.some(task => task.completed === false) || selection.projects.some(project => project.completed === false);
     };
 
     return action;
