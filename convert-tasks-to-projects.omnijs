@@ -3,11 +3,11 @@
     "targets": ["omnifocus"],
     "author": "Donie",
     "identifier": "org.0x3f.convert_tasks_to_projects",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Convert selected tasks to projects and move them to the selected folder.",
-    "label": "Convert to Tasks",
-    "shortLabel": "Convert to Tasks",
-    "paletteLabel": "Convert to Tasks",
+    "label": "Convert to Projects",
+    "shortLabel": "Convert to Projects",
+    "paletteLabel": "Convert to Projects",
     "image": "arrowshape.zigzag.right"
 }*/
 (() => {
@@ -59,7 +59,7 @@
             let form = new Form();
             form.addField(foldersMenu);
 
-            let formTitle = "Convert to Tasks";
+            let formTitle = "Convert to Projects";
             let buttonLabel = "Convert";
 
             let formPromise = form.show(formTitle, buttonLabel);
