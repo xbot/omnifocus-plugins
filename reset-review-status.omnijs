@@ -55,7 +55,7 @@
                 "Folders",
                 menuKeys,
                 menuItems,
-                lastSelectedFolderIds.split(",")
+                lastSelectedFolderIds !== null ? lastSelectedFolderIds.split(",") : []
             );
 
             let form = new Form();
