@@ -7,3 +7,6 @@
 [submodule "convert-to-projects"]
 	path = convert-to-projects
 	url = https://github.com/xbot/omnifocus-plugin-convert-to-projects.git
+[submodule "generate-work-journal"]
+	path = generate-work-journal
+	url = https://github.com/xbot/omnifocus-plugin-generate-work-journal.git
