@@ -1,0 +1,3 @@
+[submodule "omnifocus-plugin-checklist"]
+	path = checklist
+	url = https://github.com/xbot/omnifocus-plugin-checklist.git

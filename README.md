@@ -57,3 +57,9 @@ Reset review status of projects under selected folders.
 `rearrange-object-timescales.omnijs`
 
 Currently, the timescales are fixed. The selected projects or tasks can be rearranged to Morning, Noon, Afternoon, Evening, Daytime or Whole Day of the chosen date.
+
+## Checklist
+
+Make OmniFocus work as a checklist App.
+
+[xbot/omnifocus-plugin-checklist](https://github.com/xbot/omnifocus-plugin-checklist)
