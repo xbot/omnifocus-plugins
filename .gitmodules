@@ -10,3 +10,6 @@
 [submodule "generate-work-journal"]
 	path = generate-work-journal
 	url = https://github.com/xbot/omnifocus-plugin-generate-work-journal.git
+[submodule "open-jira-ticket"]
+	path = open-jira-ticket
+	url = https://github.com/xbot/omnifocus-plugin-open-jira-ticket.git
