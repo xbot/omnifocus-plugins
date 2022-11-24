@@ -1,3 +1,6 @@
 [submodule "omnifocus-plugin-checklist"]
 	path = checklist
 	url = https://github.com/xbot/omnifocus-plugin-checklist.git
+[submodule "find-in-flomo"]
+	path = find-in-flomo
+	url = https://github.com/xbot/omnifocus-plugin-find-in-flomo.git
