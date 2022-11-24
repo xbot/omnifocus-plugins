@@ -16,3 +16,6 @@
 [submodule "reschedule-objects"]
 	path = reschedule-objects
 	url = https://github.com/xbot/omnifocus-plugin-reschedule-objects.git
+[submodule "reset-review-status"]
+	path = reset-review-status
+	url = https://github.com/xbot/omnifocus-plugin-reset-review-status.git

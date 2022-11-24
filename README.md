@@ -26,9 +26,9 @@ Convert selected tasks to projects and put them into the chosen folder or the en
 
 ## Reset review status
 
-`reset-review-status.omnijs`
-
 Reset review status of projects under selected folders.
+
+[xbot/omnifocus-plugin-reset-review-status](https://github.com/xbot/omnifocus-plugin-reset-review-status)
 
 ## Rearrange timescales of selected projects or tasks
 
