@@ -4,3 +4,6 @@
 [submodule "find-in-flomo"]
 	path = find-in-flomo
 	url = https://github.com/xbot/omnifocus-plugin-find-in-flomo.git
+[submodule "convert-to-projects"]
+	path = convert-to-projects
+	url = https://github.com/xbot/omnifocus-plugin-convert-to-projects.git

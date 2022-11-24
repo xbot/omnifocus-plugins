@@ -28,9 +28,9 @@ Search in Flomo according to the selected project or the containing project of t
 
 ## Convert selected tasks to projects
 
-`convert-tasks-to-projects.omnijs`
-
 Convert selected tasks to projects and put them into the chosen folder or the end of the library.
+
+[xbot/omnifocus-plugin-convert-to-projects](https://github.com/xbot/omnifocus-plugin-convert-to-projects)
 
 ## Reset review status
 
