@@ -32,9 +32,9 @@ Reset review status of projects under selected folders.
 
 ## Rearrange timescales of selected projects or tasks
 
-`rearrange-object-timescales.omnijs`
+Reschedule the selected tasks/projects to Morning, Noon, Afternoon, Evening, Daytime or Whole Day of the chosen date.
 
-Currently, the timescales are fixed. The selected projects or tasks can be rearranged to Morning, Noon, Afternoon, Evening, Daytime or Whole Day of the chosen date.
+[xbot/omnifocus-plugin-reschedule-objects](https://github.com/xbot/omnifocus-plugin-reschedule-objects)
 
 ## Checklist
 

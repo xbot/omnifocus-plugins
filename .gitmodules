@@ -13,3 +13,6 @@
 [submodule "open-jira-ticket"]
 	path = open-jira-ticket
 	url = https://github.com/xbot/omnifocus-plugin-open-jira-ticket.git
+[submodule "reschedule-objects"]
+	path = reschedule-objects
+	url = https://github.com/xbot/omnifocus-plugin-reschedule-objects.git
