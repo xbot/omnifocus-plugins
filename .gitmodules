@@ -19,3 +19,6 @@
 [submodule "reset-review-status"]
 	path = reset-review-status
 	url = https://github.com/xbot/omnifocus-plugin-reset-review-status.git
+[submodule "libdev"]
+	path = libdev
+	url = https://github.com/xbot/omnifocus-plugin-libdev.git
