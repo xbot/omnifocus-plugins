@@ -30,7 +30,7 @@ Reset review status of projects under selected folders.
 
 [xbot/omnifocus-plugin-reset-review-status](https://github.com/xbot/omnifocus-plugin-reset-review-status)
 
-## Rearrange timescales of selected projects or tasks
+## Reschedule the selected projects or tasks
 
 Reschedule the selected tasks/projects to Morning, Noon, Afternoon, Evening, Daytime or Whole Day of the chosen date.
 
