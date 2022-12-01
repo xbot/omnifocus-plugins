@@ -12,7 +12,7 @@ Open Jira ticket for the selected task or project.
 
 [xbot/omnifocus-plugin-open-jira-ticket](https://github.com/xbot/omnifocus-plugin-open-jira-ticket)
 
-## Search in Flomo by project
+## Find the current project in Flomo
 
 Search in Flomo according to the selected project or the containing project of the selected task.
 
