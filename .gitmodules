@@ -22,3 +22,6 @@
 [submodule "libdev"]
 	path = libdev
 	url = https://github.com/xbot/omnifocus-plugin-libdev.git
+[submodule "flip-task"]
+	path = flip-task
+	url = https://github.com/xbot/omnifocus-plugin-flip-task.git

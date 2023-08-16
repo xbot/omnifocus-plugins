@@ -41,3 +41,9 @@ Reschedule the selected tasks/projects to Morning, Noon, Afternoon, Evening, Day
 Make OmniFocus work as a checklist App.
 
 [xbot/omnifocus-plugin-checklist](https://github.com/xbot/omnifocus-plugin-checklist)
+
+## Flip the selected task
+
+Append the task name to its note and let the user write a new one.
+
+[xbot/omnifocus-plugin-flip-task](https://github.com/xbot/omnifocus-plugin-flip-task)
