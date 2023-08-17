@@ -61,7 +61,5 @@ git pull
 
 git checkout main
 
-git submodule init
-
-git submodule update
+git submodule update --init --recursive
 ```
